@@ -72,12 +72,18 @@ app.get('/', async (req, res, next) => {
 
   const weatherData = await getWeatherData(latitude, longitude);
 
+  console.log(weatherData.currently);
+
   res.render('index', {
     pageTitle: 'The Weather App',
     countryName: country_name,
     regionName: region,
     cityName: city,
     flagURL: flag,
+    temperatureDisplay: temperatureDisplay,
+    currentShortWeatherSummary: weatherData.currently.summary,
+    currentLongWeatherSummary: weatherData.daily.summary,
+    currentWeatherTemperature: weatherData.currently.apparentTemperature,
     weather: weatherData
   });
 });

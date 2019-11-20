@@ -1,0 +1,11 @@
+<!-- public/views/header.ejs -->
+
+<nav id="nav-bar">
+    <span id="nav-city"><%= cityName %></span><span>,</span>
+    <span id="nav-region"><%= regionName %></span><span>,</span>
+    <span id="nav-country"><%= countryName %></span>
+    <span><img id="nav-country-flag" src="<%= flagURL %>"></img></span>
+    <span>
+        <button class="fake-weather-alert-button" onclick="fakeWeatherAlert()">Fake a Weather Alert</button>
+    </span>
+</nav> 

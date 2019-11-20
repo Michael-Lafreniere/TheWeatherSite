@@ -1,0 +1,26 @@
+<!-- public/views/current.ejs -->
+
+<div class="current-weather">
+    <h2>Today's weather</h2>
+    <div id="hilarity">
+        <span id="hilarity-weather-comment"></span>
+    </div>
+    <div class="current-weather-summary-group">
+        <span id="current-weather-icon"></canvas></span>
+        <span id="current-weather-summary-short"><%= currentShortWeatherSummary %></span>
+    </div>
+    <div id="current-weather-summary-long">
+        <%= currentLongWeatherSummary %>
+    </div>
+    <div id="current-weather-temperature">
+        <span id="current-weather-temperature-value">
+            <%= currentWeatherTemperature %>˚<%= temperatureDisplay %>
+        </span>
+    </div>
+    <div id="current-weather-humidity-value">
+        Humidity: <%= weather.currently.humidity * 100 %>%
+    </div>
+    <div id="current-weather-precip-value">
+        Chance of rain: <%= weather.currently.precipProbability * 100 %>%
+    </div>
+</div>
