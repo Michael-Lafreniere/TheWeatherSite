@@ -1,0 +1,3 @@
+# The Weather Site
+
+Initial commit...

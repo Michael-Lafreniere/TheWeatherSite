@@ -1,0 +1,31 @@
+{
+  "name": "weather-site",
+  "version": "1.0.0",
+  "description": "The standard weather site for new web developers",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "Weather",
+    "NodeJS",
+    "node-fetch",
+    "Express",
+    "JavaScript",
+    "HTML5",
+    "SCSS",
+    "CSS3",
+    "ejs"
+  ],
+  "author": "Michael Lafreniere",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0"
+  }
+}

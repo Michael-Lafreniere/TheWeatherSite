@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= pageTitle %></title>
+
+    <!-- External libraries: -->
+        <!-- Weather icons: -->
+        <link rel="stylesheet" type="text/css" href="/css/weather-icons.min.css">
+
+    <!-- Our style sheet: -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <!-- Our scripts: -->
+    <!-- <script src="/js/skycons.js"></script> -->
+    <script> const weatherData = "<%= weather %>";</script>
+    <!-- <script src="/js/app.js"></script> -->
+</head>
+<body>
+    <nav id="nav-bar">
+        <span id="nav-city"><%= cityName %></span><span>,</span>
+        <span id="nav-region"><%= regionName %></span><span>,</span>
+        <span id="nav-country"><%= countryName %></span>
+        <span><img id="nav-country-flag" src="<%= flagURL %>"></img></span>
+        <span>
+            <button class="fake-weather-alert-button" onclick="fakeWeatherAlert()">Fake Weather Alert</button>
+        </span>
+    </nav> 
+    <header>
+        <h1>The Weather App</h1>
+    </header>
+    <footer>
+        <span>Copyright &copy;2019 by Michael Lafreniere</span>
+        <button class="theme-button" onclick="toggleTheme()">Dark Theme</button>
+        <a class="me" href="https://github.com/Michael-Lafreniere"><span>My GitHub</span></a>
+    </footer>
+</body>
