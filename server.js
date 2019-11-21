@@ -72,7 +72,7 @@ app.get('/', async (req, res, next) => {
 
   const weatherData = await getWeatherData(latitude, longitude);
 
-  console.log(weatherData.currently);
+  //console.log(weatherData);
 
   res.render('index', {
     pageTitle: 'The Weather App',
