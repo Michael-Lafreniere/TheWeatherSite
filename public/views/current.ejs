@@ -3,15 +3,16 @@
 <div class="current-weather">
   <h2>Today's weather</h2>
   <div class="current-weather-summary-group">
-    <i id="current-weather-icon"></i>
-    <span id="current-weather-summary-short"
-      ><%= currentShortWeatherSummary %></span
-    >
+    <span id="current-weather-icon"></span>
+    <div id="current-weather-summary-short">
+      <%= currentShortWeatherSummary %>
+    </div>
   </div>
   <div id="current-weather-summary-long">
     <%= currentLongWeatherSummary %>
   </div>
   <div id="current-weather-temperature">
+    <span>Feels like:</span>
     <span id="current-weather-temperature-value">
       <%= currentWeatherTemperature %>˚<%= temperatureDisplay %>
     </span>

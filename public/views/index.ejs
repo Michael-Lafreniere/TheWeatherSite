@@ -5,19 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title><%= pageTitle %></title>
-
-    <!-- External libraries: -->
-    <!-- Weather icons: -->
-    <link
-      rel="stylesheet"
-      type="text/html"
-      href="../css/weather-icons.min.css"
-    />
-
     <!-- Our style sheet: -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <!-- Our scripts: -->
-    <!-- <script src="/js/skycons.js"></script> -->
+    <!-- Skycons: -->
+    <script src="/js/skycons.js"></script>
     <script>
       let weatherData = <%-JSON.stringify(weather)%>;
     </script>
@@ -45,5 +36,7 @@
       >
     </footer>
   </body>
+
+  <!-- Our script(s): -->
   <script src="/js/app.js"></script>
 </html>

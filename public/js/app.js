@@ -1,6 +1,10 @@
 let forecastDisplayed = false;
 // Default temperature to display, DarkSky returns all values in imperial (ferinheight, miles, etc):
 let temperatureDisplay = 'F';
+let skycons;
+let skyconColor = 'black';
+const weatherIconWidth = 64;
+const weatherIconHeight = 64;
 
 //
 // Fake alert data:
@@ -26,38 +30,12 @@ const buildWeatherIcon = (icon, elementID) => {
   const element = document.getElementById(elementID);
 
   if (element) {
-    let timeOfDay = 'day';
-    let weatherType = 'clear';
-
-    if (icon.includes('night')) {
-      timeOfDay = 'night';
-    }
-
-    if (icon.includes('clear')) {
-      if (timeOfDay === 'night') {
-        weatherType = 'clear';
-      } else {
-        weatherType = 'sunny';
-      }
-    } else if (icon.includes('rain')) {
-      weatherType = 'rain-mix';
-    } else if (icon.includes('snow')) {
-      weatherType = 'snow';
-    } else if (icon.includes('sleet')) {
-      weatherType = 'hail';
-    } else if (icon.includes('wind')) {
-      weatherType = 'wind';
-    } else if (icon.includes('fog')) {
-      weatherType = 'fog';
-    } else if (icon.includes('cloudy')) {
-      weatherType = 'cloudy';
-    }
-
-    element.className = `wi wi-${timeOfDay}-${weatherType}`;
+    element.innerHTML = `<canvas id="${elementID +
+      '-skycon'}" width="${weatherIconWidth}" height="${weatherIconHeight}"></canvas>`;
+    skycons.add(document.getElementById(elementID + '-skycon'), icon);
   } else {
     console.log('Unable to find:', elementID);
   }
-  console.log('icon:', icon);
 };
 
 //
@@ -76,10 +54,19 @@ const processAlertData = alert => {
 // Processes and updates the DOM with the polled daily data and passes alerts if they exist on:
 //
 const processWeatherData = data => {
-  console.log('processWeatherData:', data.currently);
+  //console.log('processWeatherData:', data.currently);
+
+  skycons = new Skycons({ color: skyconColor });
+  skycons.play();
 
   const { icon } = data.currently;
-  //const { summary } = data.hourly;
+  const { hourly } = data;
+
+  console.log('Hourly:', hourly.data);
+
+  const diff = Math.abs(new Date().getMilliseconds() - hourly.data[2].time);
+
+  console.log('diff', diff);
 
   // Handles either a real weather alert or a simulated one:
   if ('alerts' in data || simulatedAlert === true) {
@@ -92,8 +79,6 @@ const processWeatherData = data => {
   } else {
     toggleAlert(false);
   }
-
-  console.log('here');
 
   buildWeatherIcon(icon, 'current-weather-icon');
   document.getElementById(
