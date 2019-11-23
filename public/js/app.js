@@ -5,11 +5,11 @@ let skycons;
 let skyconColor = 'black';
 const weatherIconWidth = 64;
 const weatherIconHeight = 64;
+let alertActive = false;
 
 //
 // Fake alert data:
 //
-let simulatedAlert = false;
 const simulatedAlertData = {
   alerts: {
     title: 'Flood Watch for Mason, WA',
@@ -26,15 +26,15 @@ const simulatedAlertData = {
 //
 // Builds up the weather icon based on what DarkSky API passes to us:
 //
-const buildWeatherIcon = (icon, elementID) => {
-  const element = document.getElementById(elementID);
+const buildWeatherIcon = (icon, element) => {
+  //const element = document.getElementById(elementID);
 
   if (element) {
-    element.innerHTML = `<canvas id="${elementID +
+    element.innerHTML = `<canvas id="${element.id +
       '-skycon'}" width="${weatherIconWidth}" height="${weatherIconHeight}"></canvas>`;
-    skycons.add(document.getElementById(elementID + '-skycon'), icon);
+    skycons.add(document.getElementById(element.id + '-skycon'), icon);
   } else {
-    console.log('Unable to find:', elementID);
+    console.log('Invalid element passed to buildWeatherIcon().');
   }
 };
 
@@ -62,17 +62,18 @@ const processWeatherData = data => {
   const { icon } = data.currently;
   const { hourly } = data;
 
-  console.log('Hourly:', hourly.data);
+  //console.log('Hourly:', hourly.data);
+  //console.log('weather data:', data);
 
   const diff = Math.abs(new Date().getMilliseconds() - hourly.data[2].time);
 
-  console.log('diff', diff);
+  //console.log('diff', diff);
 
   // Handles either a real weather alert or a simulated one:
-  if ('alerts' in data || simulatedAlert === true) {
-    toggleAlert(true);
-    if (simulatedAlert === false) {
+  if ('alerts' in data || alertActive === true) {
+    if (alertActive === false) {
       processAlertData(data.alerts);
+      toggleAlert(true);
     } else {
       processAlertData(simulatedAlertData.alerts);
     }
@@ -80,23 +81,73 @@ const processWeatherData = data => {
     toggleAlert(false);
   }
 
-  buildWeatherIcon(icon, 'current-weather-icon');
+  // Build icon for current weather:
+  buildWeatherIcon(icon, document.getElementById('current-weather-icon'));
   document.getElementById(
     'current-weather-temperature-value'
   ).onclick = changeTemperatureReadout;
+
+  // Build icons for forecast weather:
+  for (let i = 0; i < 7; i++) {
+    let element = document.getElementById(`forecast-icon-${i}`);
+    if (element) {
+      buildWeatherIcon(forecastData[i].icon, element);
+    }
+    document.getElementById(
+      `forecast-temp-high-${i}`
+    ).onclick = changeTemperatureReadout;
+    document.getElementById(
+      `forecast-temp-low-${i}`
+    ).onclick = changeTemperatureReadout;
+  }
 };
 
 //
 // Changes between celcius and ferinheight read outs on the main page:
 //
-function changeTemperatureReadout() {
+const changeTemperatureReadout = () => {
   if (temperatureDisplay === 'F') {
     temperatureDisplay = 'C';
   } else {
     temperatureDisplay = 'F';
   }
-  //getWeatherData();
-}
+
+  const currentTemp = document.getElementById(
+    'current-weather-temperature-value'
+  );
+  if (currentTemp) {
+    const temp = Number(currentTemp.innerHTML.replace(/[^0-9\.]+/g, ''));
+    currentTemp.innerHTML = generateTemperatureDisplayText(temp);
+  }
+
+  for (let i = 0; i < 7; i++) {
+    const high = document.getElementById(`forecast-temp-high-${i}`);
+    if (high) {
+      const temp = Number(high.innerHTML.replace(/[^0-9\.]+/g, ''));
+      high.innerHTML = generateTemperatureDisplayText(temp);
+    }
+    const low = document.getElementById(`forecast-temp-low-${i}`);
+    if (low) {
+      const temp = Number(low.innerHTML.replace(/[^0-9\.]+/g, ''));
+      low.innerHTML = generateTemperatureDisplayText(temp);
+    }
+  }
+};
+
+//
+// Returns, based on temperatureDisplay either celcius or ferinheight with a fixed length of decimal percision:
+//
+const convertTemperature = temperature => {
+  if (temperatureDisplay === 'C') {
+    return ((temperature - 32) * (5 / 9)).toFixed(1);
+  } else {
+    return (temperature * 1.8 + 32).toFixed(1);
+  }
+};
+
+const generateTemperatureDisplayText = temperature => {
+  return `${convertTemperature(temperature)}˚${temperatureDisplay}`;
+};
 
 //
 // Enables or disables the alert section of the HTML page depending on if there is an alert (simulated or real)
@@ -106,10 +157,12 @@ const toggleAlert = turnOn => {
   if (turnOn) {
     if (document.getElementById('alert-hidden') != null) {
       document.getElementById('alert-hidden').id = 'alert-visible';
+      alertActive = true;
     }
   } else {
     if (document.getElementById('alert-visible') != null) {
       document.getElementById('alert-visible').id = 'alert-hidden';
+      alertActive = false;
     }
   }
 };
@@ -129,12 +182,8 @@ const toggleTheme = () => {
 // Allows the user to simulate an alert to see what it looks like, as hopefully they don't actually have one in their area!
 //
 const fakeWeatherAlert = () => {
-  if (simulatedAlert === true) {
-    simulatedAlert = false;
-  } else {
-    simulatedAlert = true;
-  }
-  //getWeatherData();
+  processAlertData(simulatedAlertData.alerts);
+  toggleAlert(!alertActive);
 };
 
 processWeatherData(weatherData);

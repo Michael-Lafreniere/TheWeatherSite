@@ -11,14 +11,14 @@
     <script src="/js/skycons.js"></script>
     <script>
       let weatherData = <%-JSON.stringify(weather)%>;
+      let dayList = <%- JSON.stringify(dayList)%>;
+      let forecastData = <%- JSON.stringify(forecastData)%>;
     </script>
   </head>
   <body>
     <% include header {cityName, regionName, countryName} %>
-    <header>
-      <h1>The Weather App</h1>
-    </header>
     <main>
+      <h1>The Weather App</h1>
       <div id="alert-hidden">
         <h1 id="alert-severity"></h1>
         <h3 id="alert-title"></h3>
@@ -27,8 +27,32 @@
         <a href="" id="alert-uri">*** Click Here For More Information ***</a>
       </div>
       <% include current %>
+      <div class="weekly-forecast">
+        <div class="forecast-cards">
+          <% for(let i = 0; i < 7; i++) { %>
+          <div class="forecast-card">
+            <h2 class="forecast-day"><%= forecastData[i].day %></h2>
+            <hr />
+            <span id="forecast-icon-<%= i %>"></span>
+            <br />
+            <span class="forecast-summary"><%= forecastData[i].summary %></span>
+            <br />
+            <div class="forecast-temp-high" id="forecast-temp-high-<%= i %>">
+              <%= forecastData[i].high.toFixed(1) %>˚<%= temperatureDisplay %>
+            </div>
+            <div class="forecast-temp-low" id="forecast-temp-low-<%= i %>">
+              <%= forecastData[i].low.toFixed(1) %>˚<%= temperatureDisplay %>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
     </main>
     <footer>
+      <div>
+        Powered By: <a href="https://darksky.net/poweredby/">DarkSky</a> and
+        <a href="https://ipdata.co">ipdata.co</a>
+      </div>
       <span>Copyright &copy;2019 by Michael Lafreniere</span>
       <button class="theme-button" onclick="toggleTheme()">Dark Theme</button>
       <a class="me" href="https://github.com/Michael-Lafreniere"

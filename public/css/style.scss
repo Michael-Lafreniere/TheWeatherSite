@@ -37,15 +37,21 @@
 }
 
 html {
+  // margin: 0 0 100px;
   box-sizing: border-box;
 }
 
 body {
   background: var(--bg-color);
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 8% auto 8%;
+  grid-template-areas: 'header' 'body' 'footer';
 }
 
 nav {
+  grid-area: header;
   color: var(--bg-color);
   background: var(--nav-bg-color);
   font-size: 20px;
@@ -66,14 +72,14 @@ nav {
   }
 }
 
-header {
-  padding-top: 1rem;
-  text-align: center;
-  width: 100%;
-}
-
 main {
-  height: 80%;
+  grid-area: body;
+  height: 90%;
+
+  h1 {
+    text-align: center;
+    width: 100%;
+  }
 
   #alert-visible {
     text-align: center;
@@ -131,14 +137,66 @@ main {
       color: var(--card-text-color);
     }
   }
+
+  .weekly-forecast {
+    display: grid;
+    margin-top: 3rem;
+    overflow: hidden;
+    place-items: center;
+    padding: 2rem;
+    .forecast-cards {
+      display: flex;
+      .forecast-card {
+        cursor: default;
+        padding: 2rem;
+        width: 8rem;
+        color: var(--card-text-color);
+        background: var(--card-bg-color);
+        text-align: center;
+        border-radius: 1rem;
+        box-shadow: 4px 4px 15px 2px rgba(black, 0.75);
+        transition: 0.25s;
+        &:not(:first-child) {
+          margin-left: -4rem;
+        }
+        &:hover,
+        &:focus-within {
+          transform: translateY(-1rem);
+        }
+        &:hover ~ .forecast-card,
+        &:focus-within ~ .forecast-card {
+          transform: translateX(5rem);
+        }
+        a {
+          color: var(--card-text-color);
+          text-decoration: none;
+          cursor: default;
+        }
+        hr {
+          margin-bottom: 5px;
+        }
+        .forecast-temp-high {
+          margin-top: 1rem;
+          color: var(--forecast-high-temp-color);
+          cursor: pointer;
+        }
+        .forecast-temp-low {
+          color: var(--forecast-low-temp-color);
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
 
 footer {
+  grid-area: footer;
   text-align: center;
   margin-top: 15px;
   padding-bottom: 5px;
-  bottom: 0;
-  position: absolute;
+  // bottom: 0;
+  // height: 100px;
+  // position: absolute;
   width: 100%;
   .theme-button {
     margin-left: 5px;
@@ -173,8 +231,8 @@ footer {
     visibility: visible;
   }
   .me span {
-    width: 150px;
-    top: 10px;
+    width: 160px;
+    top: 20px;
     right: 0;
     display: block;
     position: absolute;

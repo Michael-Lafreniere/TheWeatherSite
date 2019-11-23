@@ -8,19 +8,9 @@ let temperatureDisplay = 'F';
 const app = express();
 
 //
-// Converts from celcius and ferinheight otherwise changes decimal places to 1:
-//
-function convertTemperature(temperature) {
-  if (temperatureDisplay === 'C') {
-    return ((temperature - 32) * (5 / 9)).toFixed(1);
-  }
-  return temperature.toFixed(1);
-}
-
-//
 // Gathers and converts to JSON the IP data from ipdata.co:
 //
-async function getIPData() {
+const getIPData = async () => {
   const IPDATA_API_KEY = process.env.IPDATA_API_KEY;
   const IPDATA_DATA_QUERY = `https://api.ipdata.co?api-key=${IPDATA_API_KEY}`;
 
@@ -38,12 +28,12 @@ async function getIPData() {
   } catch (error) {
     console.log('Fetch error in getIPData():', error);
   }
-}
+};
 
 //
 // Grabs and converts to JSON all the local weather reported for the browsers location:
 //
-async function getWeatherData(lat, long) {
+const getWeatherData = async (lat, long) => {
   const DARKSKY_API_KEY = process.env.DARKSKY_API_KEY;
   const DARKSKY_QUERY = `https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${long}`;
   try {
@@ -52,7 +42,15 @@ async function getWeatherData(lat, long) {
   } catch (error) {
     console.log('Fetch error in getWeatherData():', error);
   }
-}
+};
+
+//
+// Helper function that returns the name of the week based on the language and date provided (default English):
+//
+const getDayOfWeekName = (date, locale = 'en-EN') => {
+  const name = new Date(date);
+  return name.toLocaleDateString(locale, { weekday: 'long' });
+};
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/public/views');
@@ -72,7 +70,29 @@ app.get('/', async (req, res, next) => {
 
   const weatherData = await getWeatherData(latitude, longitude);
 
-  //console.log(weatherData);
+  // Build the list of days for forecasts:
+  let day = 'Tomorrow';
+  let dayList = [];
+  for (let i = 0; i < 7; i++) {
+    if (i != 0) {
+      const nextDay = new Date();
+      nextDay.setDate(nextDay.getDate() + i + 1);
+      day = getDayOfWeekName(nextDay);
+    }
+    dayList.push(day);
+  }
+
+  // Extract out 7 days worth of forecast data:
+  let forecastData = [];
+  for (let i = 0; i < 7; i++) {
+    forecastData.push({
+      day: dayList[i],
+      summary: weatherData.daily.data[i].summary,
+      high: weatherData.daily.data[i].temperatureHigh,
+      low: weatherData.daily.data[i].temperatureLow,
+      icon: weatherData.daily.data[i].icon
+    });
+  }
 
   res.render('index', {
     pageTitle: 'The Weather App',
@@ -80,11 +100,13 @@ app.get('/', async (req, res, next) => {
     regionName: region,
     cityName: city,
     flagURL: flag,
+    dayList: dayList,
     temperatureDisplay: temperatureDisplay,
     currentShortWeatherSummary: weatherData.currently.summary,
     currentLongWeatherSummary: weatherData.daily.summary,
     currentWeatherTemperature: weatherData.currently.apparentTemperature,
-    weather: weatherData
+    weather: weatherData,
+    forecastData
   });
 });
 

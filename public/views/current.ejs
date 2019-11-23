@@ -12,9 +12,9 @@
     <%= currentLongWeatherSummary %>
   </div>
   <div id="current-weather-temperature">
-    <span>Feels like:</span>
+    <!-- <span>Feels like:</span> -->
     <span id="current-weather-temperature-value">
-      <%= currentWeatherTemperature %>˚<%= temperatureDisplay %>
+      <%= currentWeatherTemperature.toFixed(1) %>˚<%= temperatureDisplay %>
     </span>
   </div>
   <div id="current-weather-humidity-value">

@@ -41,10 +41,19 @@ html {
 
 body {
   background: var(--bg-color);
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 8% auto 8%;
+      grid-template-rows: 8% auto 8%;
+      grid-template-areas: 'header' 'body' 'footer';
 }
 
 nav {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: header;
   color: var(--bg-color);
   background: var(--nav-bg-color);
   font-size: 20px;
@@ -67,14 +76,16 @@ nav .fake-weather-alert-button {
   border-radius: 5px;
 }
 
-header {
-  padding-top: 1rem;
-  text-align: center;
-  width: 100%;
+main {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: body;
+  height: 90%;
 }
 
-main {
-  height: 80%;
+main h1 {
+  text-align: center;
+  width: 100%;
 }
 
 main #alert-visible {
@@ -144,12 +155,78 @@ main .current-weather #current-weather-summary-icon-skycon {
   color: var(--card-text-color);
 }
 
+main .weekly-forecast {
+  display: -ms-grid;
+  display: grid;
+  margin-top: 3rem;
+  overflow: hidden;
+  place-items: center;
+  padding: 2rem;
+}
+
+main .weekly-forecast .forecast-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+main .weekly-forecast .forecast-cards .forecast-card {
+  cursor: default;
+  padding: 2rem;
+  width: 8rem;
+  color: var(--card-text-color);
+  background: var(--card-bg-color);
+  text-align: center;
+  border-radius: 1rem;
+  -webkit-box-shadow: 4px 4px 15px 2px rgba(0, 0, 0, 0.75);
+          box-shadow: 4px 4px 15px 2px rgba(0, 0, 0, 0.75);
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+main .weekly-forecast .forecast-cards .forecast-card:not(:first-child) {
+  margin-left: -4rem;
+}
+
+main .weekly-forecast .forecast-cards .forecast-card:hover, main .weekly-forecast .forecast-cards .forecast-card:focus-within {
+  -webkit-transform: translateY(-1rem);
+          transform: translateY(-1rem);
+}
+
+main .weekly-forecast .forecast-cards .forecast-card:hover ~ .forecast-card,
+main .weekly-forecast .forecast-cards .forecast-card:focus-within ~ .forecast-card {
+  -webkit-transform: translateX(5rem);
+          transform: translateX(5rem);
+}
+
+main .weekly-forecast .forecast-cards .forecast-card a {
+  color: var(--card-text-color);
+  text-decoration: none;
+  cursor: default;
+}
+
+main .weekly-forecast .forecast-cards .forecast-card hr {
+  margin-bottom: 5px;
+}
+
+main .weekly-forecast .forecast-cards .forecast-card .forecast-temp-high {
+  margin-top: 1rem;
+  color: var(--forecast-high-temp-color);
+  cursor: pointer;
+}
+
+main .weekly-forecast .forecast-cards .forecast-card .forecast-temp-low {
+  color: var(--forecast-low-temp-color);
+  cursor: pointer;
+}
+
 footer {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-area: footer;
   text-align: center;
   margin-top: 15px;
   padding-bottom: 5px;
-  bottom: 0;
-  position: absolute;
   width: 100%;
 }
 
@@ -204,8 +281,8 @@ footer .me:hover span {
 }
 
 footer .me span {
-  width: 150px;
-  top: 10px;
+  width: 160px;
+  top: 20px;
   right: 0;
   display: block;
   position: absolute;
