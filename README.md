@@ -4,7 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/Michael-Lafreniere/the-movie-site?style=flat-square)](https://github.com/Michael-Lafreniere/TheWeatherSite/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Michael-Lafreniere/the-movie-site.svg?style=flat-square)](https://github.com/Michael-Lafreniere/TheWeatherSite/network)
 
-![The Weather Site GIF](https://github.com/Michael-Lafreniere/the-movie-site/blob/master/docs/TheWeatherSite.gif 'GIF of the site')
+![The Weather Site GIF](https://github.com/Michael-Lafreniere/TheWeatherSite/blob/master/docs/TheWeatherSite.gif 'GIF of the site')
 
 The obligatory weather site. I originally wrote this about 6-8 months ago and in this version I cleaned it up but tried to keep the general methods the same so I can look back and see how my coding has improved. I did transition the functions from older style function name() {} style to modern ES6 const name = () => {} styling as I prefer that.
 
@@ -22,6 +22,7 @@ I used [ipdata.co](https://ipdata.co) for getting location data, city, state, co
 | [ejs](https://ejs.co)                            | An embedded JavaScript templating language                                                        |
 | [Skycons](https://darkskyapp.github.io/skycons/) | A set of 10 animated weather glyphs, procedurally generated using JavaScript and HTML5 canvas tag |
 | [dotenv](https://github.com/motdotla/dotenv)     | Is a zero dependency module that loads environment variables from a .env file into process.env.   |
+| [nodemon](https://nodemon.io)                    | A utility that monitors for any changes to your source code and automatically restarts the server |
 
 ## Installation/Usage
 
