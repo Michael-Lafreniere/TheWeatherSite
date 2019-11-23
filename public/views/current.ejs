@@ -18,9 +18,9 @@
     </span>
   </div>
   <div id="current-weather-humidity-value">
-    Humidity: <%= weather.currently.humidity * 100 %>%
+    Humidity: <%= weather.currently.humidity.toFixed(1) * 100 %>%
   </div>
   <div id="current-weather-precip-value">
-    Chance of rain: <%= weather.currently.precipProbability * 100 %>%
+    Chance of rain: <%= weather.currently.precipProbability.toFixed(1) * 100 %>%
   </div>
 </div>
