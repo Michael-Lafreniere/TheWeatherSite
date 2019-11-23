@@ -86,6 +86,7 @@ main {
 main h1 {
   text-align: center;
   width: 100%;
+  font-size: 2.75em;
 }
 
 main #alert-visible {
@@ -173,7 +174,7 @@ main .weekly-forecast .forecast-cards {
 main .weekly-forecast .forecast-cards .forecast-card {
   cursor: default;
   padding: 2rem;
-  width: 8rem;
+  width: 10rem;
   color: var(--card-text-color);
   background: var(--card-bg-color);
   text-align: center;
@@ -239,11 +240,11 @@ footer .theme-button {
 }
 
 footer .me {
-  background: url("../img/Michael-Lafreniere.jpg") no-repeat center/contain;
-  width: 60px;
-  height: 60px;
+  background: url("https://avatars0.githubusercontent.com/u/47261944?s=460&v=4") no-repeat center/contain;
+  width: 50px;
+  height: 70px;
   border-radius: 50%;
-  bottom: 16px;
+  bottom: 10px;
   right: 16px;
   display: block;
   position: fixed;
@@ -281,8 +282,8 @@ footer .me:hover span {
 }
 
 footer .me span {
-  width: 160px;
-  top: 20px;
+  width: 165px;
+  top: 25px;
   right: 0;
   display: block;
   position: absolute;
