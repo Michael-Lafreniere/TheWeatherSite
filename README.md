@@ -43,7 +43,8 @@ npm install
 # Create the .env file:
 touch .env
 
-# Before carrying on, open the .env file in your favorite text editor and add in the API keys you got previously and save the file:
+# Before carrying on, open the .env file in your favorite text editor and
+# add in the API keys you got previously and save the file:
 IPDATA_API_KEY = YOUR_IPDATA_API_KEY
 DARKSKY_API_KEY = YOUR_DARKSKY_API_KEY
 
@@ -56,7 +57,7 @@ npm run start
 
 ## Possible Future work
 
-I would like to eventually come back to this project and add in hourly weather forecasts to the current day using a timeline. Likely every other hour as space is limited.
+I would like to eventually come back to this project and add in hourly weather forecasts to the current day using a timeline.Likely every other hour as space is limited.
 
 ## Author
 
