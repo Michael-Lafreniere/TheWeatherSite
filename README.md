@@ -57,7 +57,7 @@ npm run start
 
 ## Possible Future work
 
-I would like to eventually come back to this project and add in hourly weather forecasts to the current day using a timeline.Likely every other hour as space is limited.
+I would like to eventually come back to this project and add in hourly weather forecasts to the current day using a timeline.  Likely every other hour as space is limited.
 
 ## Author
 
